@@ -61,38 +61,36 @@ const DoctorProfile = ({navigation}) => {
      (_, i) => `${i + 1} Year${i > 0 ? 's' : ''}`,
    );
 
-   const handleSave = () => {
-     if (!profile.name || !profile.age || !profile.number) {
-       Alert.alert('Error', 'Please fill all personal details.');
-       return;
-     }
-     if (!profile.specialist) {
-       Alert.alert('Error', 'Please select a specialist.');
-       return;
-     }
-     if (!profile.experience) {
-       Alert.alert('Error', 'Please select years of experience.');
-       return;
-     }
-     if (!profile.photo) {
-       Alert.alert('Error', 'Please upload a profile photo.');
-       return;
-     }
+   
 
-     setIsEditable(false);
-     ToastAndroid.show('Profile updated successfully', ToastAndroid.TOP);
-    //  Alert.alert('Success', 'Profile updated successfully!');
-   };
+  //  const handleSave = () => {
+  //    if (!profile.name || !profile.age || !profile.number) {
+  //      Alert.alert('Error', 'Please fill all personal details.');
+  //      return;
+  //    }
+  //    if (!profile.specialist) {
+  //      Alert.alert('Error', 'Please select a specialist.');
+  //      return;
+  //    }
+  //    if (!profile.experience) {
+  //      Alert.alert('Error', 'Please select years of experience.');
+  //      return;
+  //    }
+  //    if (!profile.photo) {
+  //      Alert.alert('Error', 'Please upload a profile photo.');
+  //      return;
+  //    }
 
-
+  //    setIsEditable(false);
+  //    ToastAndroid.show('Profile updated successfully', ToastAndroid.TOP);
+  //   //  Alert.alert('Success', 'Profile updated successfully!');
+  //  };
 
    const handleEditToggle = () => {
      setIsEditable(!isEditable);
     };
 
-  
-
-  const handlePhotoUpload = () => {
+   const handlePhotoUpload = () => {
     launchImageLibrary({mediaType: 'photo'}, response => {
       if (response.didCancel) {
         return;
@@ -119,7 +117,46 @@ const DoctorProfile = ({navigation}) => {
         return;
       }
     });
-  };
+   };
+
+   const handleSave = () => {
+     if (!profile.name || !profile.age || !profile.number) {
+       Alert.alert('Error', 'Please fill all personal details.');
+       return;
+     }
+     if (!profile.specialist) {
+       Alert.alert('Error', 'Please select a specialist.');
+       return;
+     }
+     if (!profile.experience) {
+       Alert.alert('Error', 'Please select years of experience.');
+       return;
+     }
+     if (!profile.photo) {
+       Alert.alert('Error', 'Please upload a profile photo.');
+       return;
+     }
+     if (!profile.degree) {
+       Alert.alert('Error', 'Please enter your degree.');
+       return;
+     }
+     if (!profile.fellowship) {
+       Alert.alert('Error', 'Please enter your fellowship.');
+       return;
+     }
+     if (!profile.about) {
+       Alert.alert('Error', 'Please write about yourself.');
+       return;
+     }
+
+     setIsEditable(false);
+     ToastAndroid.show('Profile updated successfully!', ToastAndroid.SHORT);
+   };
+
+
+ 
+
+
 
   return (
     <View style={styles.container}>
@@ -137,9 +174,9 @@ const DoctorProfile = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
 
       {/* Content Section */}
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Input Fields */}
         <Text style={styles.modalTitle}>Enter Your Details</Text>
         <InputField
@@ -209,7 +246,7 @@ const DoctorProfile = ({navigation}) => {
             labelField="label"
             valueField="value"
             placeholder="Select experience"
-            placeholderStyle={{color: '#000', fontSize: 16}}
+            placeholderStyle={{color: '#000000', fontSize: 16}}
             selectedTextStyle={{color: '#000', fontSize: 16}}
             itemTextStyle={{color: '#000', fontSize: 16}}
             value={profile.experience}
@@ -270,14 +307,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingBottom: 20,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#F3F4F6',
-    paddingVertical: 15,
+    paddingVertical: 10,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
@@ -289,7 +325,7 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     fontWeight: '600',
-    marginBottom: 20,
+    marginBottom: 10,
     color: '#000',
   },
   headerTitle: {
@@ -311,7 +347,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 30,
+    paddingTop: 10,
   },
   inputContainer: {
     marginBottom: 20,
@@ -337,16 +373,16 @@ const styles = StyleSheet.create({
   saveButton: {
     backgroundColor: '#34D399',
     borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom: 20,
   },
   saveButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
-    marginBottom: 40,
   },
   dropdown: {
     borderWidth: 1,

@@ -180,8 +180,7 @@ const MyBookingsScreen = ({navigation}) => {
   );
 
   return (
-    <ScrollView style={styles.container}>
-     
+    <ScrollView style={styles.container}>   
       <Text style={styles.appointmentsHeader}> My Appointments</Text>
       <Text style={styles.allAppointmentsHeader}>All Appointments</Text>
       <View style={styles.filterContainer}>
@@ -268,7 +267,7 @@ const MyBookingsScreen = ({navigation}) => {
         </View>
       </Modal>
 
-      <Modal
+      {/* <Modal
         visible={request}
         animationType="slide"
         transparent={true}
@@ -317,7 +316,7 @@ const MyBookingsScreen = ({navigation}) => {
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
 
     </ScrollView>
   );
@@ -377,16 +376,16 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   card: {
-    backgroundColor: '#fffaf7', // Light background for softness
+    backgroundColor: '#fffaf7',
     padding: 16,
     borderRadius: 8,
-    borderWidth: 2,
-    borderColor: '#B3A69B', // Slightly darker border for a more defined look
+    borderWidth: 1,
+    borderColor: '#B3A69B',
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.1,
     shadowRadius: 6,
-    elevation: 3,
+    elevation: 1,
     marginLeft: 10,
     marginRight: 10,
   },

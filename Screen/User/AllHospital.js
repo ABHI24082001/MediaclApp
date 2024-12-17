@@ -7,14 +7,16 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  Linking,
-  Modal,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/FontAwesome';
+import LinearGradient from 'react-native-linear-gradient';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Dropdown} from 'react-native-element-dropdown';
-const AllHospital = ({navigation}) => {
-  const [searchQuery, setSearchQuery] = useState(''); // State to store the search query
+import globalStyles from '../component/style';
+
+const App = ({navigation}) => {
+  const [searchQuery, setSearchQuery] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedTreatment, setSelectedTreatment] = useState(null);
 
@@ -53,15 +55,14 @@ const AllHospital = ({navigation}) => {
       rating: 5.0,
       reviews: 128,
       imageUri:
-        'https://plus.unsplash.com/premium_photo-1682130157004-057c137d96d5?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://thumbs.dreamstime.com/z/hospital-medical-emergency-room-health-care-aid-24011837.jpg?ct=jpeg',
     },
     {
       id: 2,
-      name: 'Shri Mool Chand Kharaiti Ram Hospital & Ayurvedic Research Institute',
+      name: 'Shri Mool Chand Kharaiti Ram Hospital',
       treatments: ['CTVS', 'Orthopedics', 'Gastroenterology'],
       details: {
-        hospitalName:
-          'Shri Mool Chand Kharaiti Ram Hospital & Ayurvedic Research Institute',
+        hospitalName: 'Shri Mool Chand Kharaiti Ram Hospital ',
         address: 'Lajpat Nagar-III, New Delhi-110024',
         telephone: {
           landlines: ['25751111', '25861463', '42251252'],
@@ -76,7 +77,7 @@ const AllHospital = ({navigation}) => {
       rating: 4.9,
       reviews: 58,
       imageUri:
-        'https://plus.unsplash.com/premium_photo-1682130157004-057c137d96d5?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://media.istockphoto.com/id/1312706413/photo/modern-hospital-building.jpg?s=2048x2048&w=is&k=20&c=15TsJBPquZtgf8ciMtV6wlEAccnI5RJoNcqzFY9qe80=',
     },
     {
       id: 3,
@@ -101,7 +102,32 @@ const AllHospital = ({navigation}) => {
       reviews: 58,
 
       imageUri:
-        'https://plus.unsplash.com/premium_photo-1682130157004-057c137d96d5?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://thumbs.dreamstime.com/z/hospital-building-modern-parking-lot-59693686.jpg?ct=jpeg',
+    },
+    {
+      id: 4,
+      name: 'Batra Hospital & Medical Research Centre',
+      treatments: ['CTVS', 'Orthopedics', 'Gastroenterology'],
+      details: {
+        hospitalName: 'Batra Hospital & Medical Research Centre',
+        address:
+          'Tughlakabad Instl. Area, Mehrauli-Badarpur Road New Delhi-110062',
+        telephone: {
+          landlines: ['25751111', '25861463', '42251252'],
+        },
+        diseasesEmpanelled: {
+          general:
+            'Advanced medical research and treatment across multiple disciplines.',
+        },
+        remark: 'Focus on research-based treatments.',
+      },
+      distance: '2.5 km/40min',
+      type: 'Clinic',
+      rating: 4.9,
+      reviews: 58,
+
+      imageUri:
+        'https://as1.ftcdn.net/v2/jpg/02/11/15/66/1000_F_211156620_CeBr5etdTNXLb231sFcQ8M9YD1OY5IW8.jpg',
     },
   ];
 
@@ -115,137 +141,115 @@ const AllHospital = ({navigation}) => {
       (!selectedTreatment || hospital.treatments.includes(selectedTreatment)),
   );
 
-  // Function to handle dialing
-  const dialPhone = number => {
-    Linking.openURL(`tel:${number}`);
-  };
-
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <AntDesign
-          name="arrowleft"
-          size={25}
-          color="#6B7280"
-          onPress={() => navigation.goBack()}
-        />
-        <Text style={styles.headerTitle}>All Hospitals</Text>
-        <View style={{width: 20}}></View>
-      </View>
-      <View style={styles.searchContainer}>
-        <Icon
-          name="search"
-          size={20}
-          color="#9CA3AF"
-          style={styles.searchIcon}
-        />
-        {/* Adjusted TextInput width */}
-        <TextInput
-          placeholder="Search City, Hospital, Treatment"
-          style={styles.searchInput}
-          placeholderTextColor={'#000'}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
-        {/* Filter button */}
-        <TouchableOpacity onPress={() => setModalVisible(true)}>
-          <View
-            style={{
-              width: 40, // Fixed width
-              height: 40, // Fixed height
-              borderRadius: 20, // Rounded button
-              backgroundColor: '#F3F4F6', // Background color
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginLeft: 10, // Space between TextInput and Filter button
-            }}>
-            <AntDesign name="filter" size={20} color="#6B7280" />
-          </View>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      {/* Header Section */}
+      <LinearGradient
+        colors={['#28C76F', '#1E8449']}
+        style={styles.headerContainer}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}>
+          <AntDesign name="arrowleft" size={25} color="#FFF" />
         </TouchableOpacity>
+
+        <Text style={styles.greetingText}>All Hospitals </Text>
+
+        <View style={styles.searchContainer}>
+          <Icon name="search" size={20} style={styles.searchIcon} />
+          <TextInput
+            placeholder="Search for packages, services..."
+            style={styles.searchInput}
+            placeholderTextColor="#6B7280"
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+        </View>
+
+        <View style={styles.filterContainer}>
+          <Dropdown
+            style={styles.dropdown}
+            data={treatments}
+            placeholderStyle={styles.dropdownText}
+            selectedTextStyle={styles.dropdownText}
+            itemTextStyle={styles.dropdownText}
+            labelField="label"
+            valueField="value"
+            placeholder="Select treatment"
+            value={selectedTreatment}
+            onChange={item => setSelectedTreatment(item.value)}
+            renderRightIcon={() => (
+              <AntDesign name="down" size={20} color="#888" />
+            )}
+          />
+        </View>
+      </LinearGradient>
+
+      {/* Info Box */}
+      <View style={styles.infoBox}>
+        <Image
+          source={{
+            uri: 'https://plus.unsplash.com/premium_photo-1658506671316-0b293df7c72b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          }}
+          style={styles.infoImage}
+        />
+        <View style={styles.infoTextContainer}>
+          <Text style={styles.infoTitle}>What is the Best Package for Me?</Text>
+          <Text style={styles.infoSubtitle}>
+            We help you find a package that suits your needs.
+          </Text>
+          <TouchableOpacity>
+            <Text style={styles.infoLink}>Learn More </Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
-      {/* <View style={styles.resultsContainer}>
-        <Text style={styles.resultsText}>{filteredHospitals.length} found</Text>
-      </View> */}
-      {/* onPress={openModal} */}
-      {filteredHospitals.map(hospital => (
-        <TouchableOpacity
-          key={hospital.id}
-          onPress={() => navigation.navigate('DoctorDetails', {hospital})}>
-          <View style={styles.card}>
-            {/* <Image source={{ uri: hospital.imageUri }} style={styles.cardImage} /> */}
+      {/* Section Title */}
+      <Text style={styles.sectionTitle}>All Hospitals</Text>
+
+      <View style={styles.hospitalContainer}>
+        {filteredHospitals.map(hospital => (
+          <TouchableOpacity
+            key={hospital.id}
+            onPress={() => navigation.navigate('DoctorDetails', {hospital})}
+            style={styles.cardContainer}>
+            <Image
+              source={{uri: hospital.imageUri}}
+              style={styles.hospitalImage}
+              resizeMode="cover"
+            />
             <View style={styles.cardContent}>
-              <Text style={styles.cardTitle}>{hospital.name}</Text>
-              <Text style={styles.cardAddress}>
-                <Icon name="map-marker" size={18} color="#ff7e75" />{' '}
+              <Text
+                style={globalStyles.textBold2}
+                numberOfLines={1}
+                ellipsizeMode="tail">
+                {hospital.name}
+              </Text>
+              <Text
+                style={globalStyles.textMedium}
+                numberOfLines={2}
+                ellipsizeMode="tail">
                 {hospital.details.address}
               </Text>
-
-              {/* Hospital Contact Info */}
-              <Text style={styles.detailText}>Hospital Name:</Text>
-              <Text style={styles.infoText}>
-                {hospital.details.hospitalName}
+              <Text
+                style={globalStyles.textMedium}
+                numberOfLines={1}
+                ellipsizeMode="tail">
+                {hospital.distance}
               </Text>
-              {/* <Text style={styles.detailText}>Telephone:</Text>
-              <Text style={styles.phoneText}>{hospital.details.telephone.number}</Text> */}
-              {/* {hospital.details.telephone.landlines.map((number, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.phoneBadge}
-                  onPress={() => dialPhone(number)} // Make a call
-                >
-                  <Icon name="phone" size={14} color="#00A86B" />
-                  <Text style={styles.phoneText}>{number}</Text>
-                </TouchableOpacity>
-              ))} */}
+
+              <TouchableOpacity
+                style={styles.detailsButton}
+                key={hospital.id}
+                onPress={() =>
+                  navigation.navigate('DoctorDetails', {hospital})
+                }>
+                <Text style={styles.detailsButtonText}>View Details</Text>
+              </TouchableOpacity>
             </View>
-          </View>
-        </TouchableOpacity>
-      ))}
-
-      <Modal
-        transparent={true}
-        visible={isModalVisible}
-        animationType="slide"
-        onRequestClose={() => setModalVisible(false)}>
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>Search Hospital</Text>
-              <AntDesign
-                name="close"
-                size={20}
-                color="#6B7280"
-                onPress={() => setModalVisible(false)}
-              />
-            </View>
-
-            <Text style={styles.dropdownLabel}>Select Treatment</Text>
-            <Dropdown
-              style={styles.dropdown}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              data={treatments}
-              itemTextStyle={styles.itemTextStyle}
-              search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              placeholder="All Treatments"
-              searchPlaceholder="Search..."
-              value={selectedTreatment}
-              onChange={item => setSelectedTreatment(item.value)}
-            />
-
-            <TouchableOpacity
-              style={styles.applyButton}
-              onPress={() => setModalVisible(false)}>
-              <Text style={styles.applyButtonText}>Apply</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+          </TouchableOpacity>
+        ))}
+      </View>
     </ScrollView>
   );
 };
@@ -253,182 +257,213 @@ const AllHospital = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F3F4F6',
-    padding: 16,
+    backgroundColor: '#F9FAFB',
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 20,
+  headerContainer: {
+    paddingVertical: 40,
+    paddingHorizontal: 20,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
+    elevation: 5,
   },
-  headerTitle: {
-    fontSize: 22,
+  backButton: {
+    position: 'absolute',
+    left: 16,
+    top: 16,
+    padding: 8,
+  },
+  greetingText: {
+    color: '#FFFFFF',
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#1F2937',
-  },
-  resultContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    textAlign: 'center',
     marginBottom: 16,
-  },
-  resultText: {
-    color: '#6b7280',
-  },
-  itemTextStyle: {
-    color: '#000', // Black text for all items
-    fontSize: 16,
-  },
-  sortText: {
-    color: '#6b7280',
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   searchContainer: {
-    flexDirection: 'row', // Aligns items in a row
-    alignItems: 'center', // Vertically centers the row
-    backgroundColor: '#E5E7EB', // Background for the search box
-    borderRadius: 10, // Rounded corners
-    paddingHorizontal: 15, // Padding for inner content
-    height: 50, // Height of the search bar
-    marginBottom: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: -10,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    marginBottom: 10,
+  },
+  searchIcon: {
+    color: '#9CA3AF',
+    marginRight: 8,
   },
   searchInput: {
     flex: 1,
-    fontSize: 16,
-    color: '#374151',
-    marginRight: 10,
+    color: '#111827',
   },
-  searchIcon: {
-    marginRight: 10,
+  filterIcon: {
+    color: '#9CA3AF',
+  },
+  infoBox: {
+    flexDirection: 'row',
+    backgroundColor: '#EFF6FF',
+    borderRadius: 12,
+    padding: 16,
+    marginVertical: 16,
+    marginLeft: 20,
+    marginRight: 20,
+    borderWidth: 1,
+    borderColor: '#000',
+  },
+  infoImage: {
+    width: 70,
+    height: 70,
+    borderRadius: 8,
+  },
+  infoTextContainer: {
+    marginLeft: 16,
+    flex: 1,
+  },
+  infoTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#111827',
+  },
+  infoSubtitle: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginTop: 4,
+  },
+  infoLink: {
+    fontSize: 14,
+    color: '#10B981',
+    fontWeight: 'bold',
+    marginTop: 8,
   },
 
-  resultsContainer: {
+  packageContainer: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
+    paddingHorizontal: 16,
   },
-  resultsText: {
-    color: '#6B7280',
-  },
-  card: {
+  packageBox: {
+    width: '48%',
     backgroundColor: '#FFFFFF',
     borderRadius: 12,
-    overflow: 'hidden',
     marginBottom: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    shadowOffset: {width: 0, height: 5},
+    borderColor: '#E5E7EB',
+    borderWidth: 1,
+    overflow: 'hidden',
   },
-  cardImage: {
+  packageImage: {
     width: '100%',
-    height: 150,
+    height: 120,
   },
-  cardContent: {
-    padding: 16,
+  packageTextContainer: {
+    padding: 12,
   },
-  cardTitle: {
-    fontSize: 18,
+  packageTitle: {
+    fontSize: 16,
     fontWeight: 'bold',
-    color: '#1F2937',
-    marginBottom: 8,
+    color: '#111827',
+    marginBottom: 4,
   },
-  cardAddress: {
+  packagePrice: {
+    fontSize: 16,
+    color: '#10B981',
+    marginBottom: 4,
+  },
+  packageStatusYellow: {
     fontSize: 14,
-    color: '#6B7280',
-    marginBottom: 10,
-    lineHeight: 20,
-  },
-  detailText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#374151',
-  },
-  infoText: {
-    fontSize: 14,
-    color: '#000',
-    marginBottom: 8,
-  },
-  phoneBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#E5F9ED',
-    borderRadius: 5,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    marginRight: 8,
-    marginBottom: 8,
-  },
-  phoneText: {
-    marginLeft: 5,
-    color: '#000',
-    fontWeight: '600',
-    fontSize: 14,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'flex-end',
-  },
-  modalContent: {
-    backgroundColor: '#FFFFFF',
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    padding: 20,
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1F2937',
-  },
-  dropdownLabel: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#000',
-    marginBottom: 8,
+    color: '#F59E0B',
   },
   dropdown: {
-    backgroundColor: '#F3F4F6',
+    width: '100%', // Adjusts width to 40% of the screen
+    backgroundColor: '#fff',
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
     paddingHorizontal: 10,
-    height: 50,
-    marginBottom: 20,
+    paddingVertical: 12,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2, // Shadow for Android
+  },
+  dropdownText: {
+    color: '#9CA3AF',
+    fontSize: 16,
+    fontWeight: '500',
   },
   placeholderStyle: {
     fontSize: 16,
     color: '#000',
   },
-  selectedTextStyle: {
-    fontSize: 16,
+
+  sectionTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginHorizontal: 20,
+    marginVertical: 10,
     color: '#000',
   },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
-    backgroundColor: '#E5E7EB',
-    paddingHorizontal: 10,
-    borderRadius: 8,
+  hospitalContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
   },
-  applyButton: {
-    backgroundColor: '#10B981',
+  cardContainer: {
+    width: '48%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    marginBottom: 16,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  hospitalImage: {
+    width: '100%',
+    height: 120,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
+
+  cardContent: {
+    padding: 10,
+  },
+  hospitalName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 4,
+  },
+  hospitalAddress: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginBottom: 4,
+  },
+  hospitalDistance: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginBottom: 4,
+  },
+  detailsButton: {
+    backgroundColor: '#28C76F',
     borderRadius: 8,
-    paddingVertical: 12,
+    marginTop: 8,
+    paddingVertical: 10,
     alignItems: 'center',
   },
-  applyButtonText: {
+  detailsButtonText: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
   },
 });
 
-export default AllHospital;
+export default App;

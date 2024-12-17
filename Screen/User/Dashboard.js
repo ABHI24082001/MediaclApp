@@ -99,7 +99,10 @@ const Dashboard = ({navigation}) => {
                     color={category.iconColor}
                   />
                 </View>
-                <Text style={styles.categoryText}>{category.name}</Text>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('AllDoctor')}>
+                  <Text style={styles.categoryText}>{category.name}</Text>
+                </TouchableOpacity>
               </View>
             ))}
           </View>
@@ -107,7 +110,10 @@ const Dashboard = ({navigation}) => {
           {/* Medical Centers Section */}
           {/* Medical Centers Section */}
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>All Medical Centers</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('AllHospital')}>
+              <Text style={styles.sectionTitle}>All Medical Centers</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => navigation.navigate('AllHospital')}>
               <Text style={styles.sectionLink}>See All</Text>
@@ -119,10 +125,13 @@ const Dashboard = ({navigation}) => {
             style={styles.medicalCentersContainer}>
             {medicalCenters.map((center, index) => (
               <View key={index} style={styles.medicalCenterCard}>
-                <Image
-                  source={{uri: center.image}}
-                  style={styles.medicalCenterImage}
-                />
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('AllHospital')}>
+                  <Image
+                    source={{uri: center.image}}
+                    style={styles.medicalCenterImage}
+                  />
+                </TouchableOpacity>
                 <View style={styles.medicalCenterDetails}>
                   <Text style={styles.medicalCenterName}>{center.name}</Text>
                   <Text style={styles.medicalCenterLocation}>

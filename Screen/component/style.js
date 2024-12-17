@@ -17,6 +17,12 @@ const globalStyles = {
     color: '#000',
     fontWeight: '800',
   },
+  textBold2: {
+    fontFamily: 'Poppins-Bold',
+    fontSize: 18,
+    color: '#000',
+    fontWeight: '700',
+  },
   textItalic: {
     fontFamily: 'Poppins-Italic',
     fontSize: 16,

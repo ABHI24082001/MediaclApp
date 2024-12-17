@@ -1,177 +1,248 @@
 import React from 'react';
-import { ScrollView, Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const HospitalDetails = ({ route, navigation }) => {
-  const { hospital } = route.params; // Pass hospital object through navigation
-
-  const { name, details, distance, rating, reviews, imageUri } = hospital;
+const MountainDetailsScreen = ({navigation ,route}) => {
+  const { hospital } = route.params;
+  
+  const {name , details , distance , rating , reviews, imageUri , treatments} = hospital;
 
   return (
-    <ScrollView style={styles.container}>
-      {/* Header */}
-      <View style={styles.headerContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerLeft}>
-          <AntDesign name="arrowleft" size={25} color="#6B7280" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Hospital Details</Text>
-        <View style={styles.headerRight} />
-      </View>
-
-      {/* Hospital Image */}
-      <Image source={{ uri: imageUri }} style={styles.image} />
-
-      {/* Hospital Name */}
-      <View style={styles.hospitalInfoContainer}>
-        <Text style={styles.hospitalName}>{name}</Text>
-      </View>
-
-      {/* Address Section */}
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Address</Text>
-        <Text style={styles.cardText}>{details.address}</Text>
-      </View>
+        <View style={styles.imageContainer}>
+          <Image
+            source={{
+              uri: imageUri,
+            }}
+            style={styles.image}
+          />
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.backButton}>
+            <Icon name="arrow-left" size={20} color="#FFF" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.bookmarkButton}>
+            <Icon name="share" size={20} color="#FFF" />
+          </TouchableOpacity>
+          <View style={styles.infoContainer}>
+            <View>
+              <Text style={styles.title}>{name}</Text>
+              <Text style={styles.subtitle}>{details.address}</Text>
+            </View>
+          </View>
+        </View>
 
-      {/* Contact Numbers */}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Contact Numbers</Text>
-        <Text style={styles.cardText}>
-          Landline: {details.telephone.landlines.join(', ')}
-        </Text>
-        {details.telephone.contacts &&
-          details.telephone.contacts.map((contact, index) => (
+        <View style={styles.detailsContainer}>
+          <Text style={styles.activeTab}>Type</Text>
+          <Text style={styles.Type}>{hospital?.type}</Text>
+          <Text style={styles.activeTab}>Overview</Text>
+          <Text style={styles.description}>
+            {details?.diseasesEmpanelled?.general}
+          </Text>
+
+          <Text style={styles.activeTab}>Remark</Text>
+          <Text style={styles.description}>{details?.remark}</Text>
+
+          <Text style={styles.activeTab}>Contact Number</Text>
+          {details.telephone.landlines &&
+            details.telephone.landlines.map((contact, index) => (
+              <View key={index} style={styles.contactContainer}>
+                <View style={styles.contactRow}>
+                  <Text style={styles.cardText}>
+                    <Text style={styles.label}>Landline: </Text>
+                    {contact}
+                  </Text>
+                </View>
+              </View>
+            ))}
+
+          <Text style={styles.activeTab}> All Treatment</Text>
+
+          {treatments.map((treatment, index) => (
             <View key={index} style={styles.contactContainer}>
-              <Text style={styles.cardText}>Contact: {contact.name}</Text>
-              {contact.position && (
-                <Text style={styles.cardText}>Position: {contact.position}</Text>
-              )}
-              {contact.mobile && (
-                <Text style={styles.cardText}>Mobile: {contact.mobile}</Text>
-              )}
-              {contact.office && (
-                <Text style={styles.cardText}>Office: {contact.office}</Text>
-              )}
-              {contact.email && (
-                <Text style={styles.cardText}>Email: {contact.email}</Text>
-              )}
+              <View style={styles.contactRow}>
+                <Text style={styles.cardText}>
+                  <Text style={styles.label}>Treatment: </Text>
+                  {treatment}
+                </Text>
+              </View>
             </View>
           ))}
-      </View>
 
-      {/* Treatments Offered */}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Treatments Offered</Text>
-        <Text style={styles.cardText}>{details.diseasesEmpanelled.general}</Text>
+          <TouchableOpacity
+            style={styles.bookButton}
+            onPress={() => navigation.navigate('AllDoctor')}>
+            <Text style={styles.bookButtonText}>View All Doctor</Text>
+            <Icon
+              name="arrow-right"
+              size={20}
+              color="#fff"
+              style={styles.bookButtonIcon}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
-
-      {/* Remarks Section */}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Remarks</Text>
-        <Text style={styles.cardText}>{details.remark}</Text>
-      </View>
-
-      {/* Button */}
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate('AllDoctor')}
-      >
-        <Text style={styles.buttonText}>View All Doctors</Text>
-      </TouchableOpacity>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#F9FAFB',
+    flexGrow: 1,
+    backgroundColor: '#fff',
   },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: '#F3F4F6',
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
+  card: {
+    backgroundColor: '#fff',
+    width: '100%',
   },
-  headerLeft: {
-    width: 40,
-    alignItems: 'center',
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#1F2937',
-    flex: 1,
-    textAlign: 'center',
-  },
-  headerRight: {
-    width: 40, // Placeholder for alignment
+  imageContainer: {
+    position: 'relative',
   },
   image: {
     width: '100%',
-    height: 200,
-    resizeMode: 'cover',
-    borderRadius: 8,
-    marginBottom: 10,
+    height: 400,
   },
-  hospitalInfoContainer: {
+  backButton: {
+    position: 'absolute',
+    top: 16,
+    left: 16,
+    backgroundColor: '#000',
+    padding: 8,
+    borderRadius: 50,
+  },
+  bookmarkButton: {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    backgroundColor: '#000',
+    padding: 8,
+    borderRadius: 50,
+  },
+  infoContainer: {
+    position: 'absolute',
+    bottom: 16,
+    left: 16,
+    right: 16,
+    backgroundColor: '#e5e7eb',
     padding: 16,
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E7EB',
+    borderRadius: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
-  hospitalName: {
-    fontSize: 22,
-    fontWeight: '700',
-    color: '#1F2937',
-  },
-  card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    padding: 16,
-    marginHorizontal: 16,
-    marginVertical: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  cardTitle: {
+  title: {
+    color: '#000',
     fontSize: 18,
-    fontWeight: '600',
-    color: '#374151',
-    marginBottom: 8,
+    fontWeight: 'bold',
   },
-  cardText: {
+  subtitle: {
+    color: '#000',
+    fontSize: 14,
+  },
+  priceContainer: {
+    alignItems: 'flex-end',
+  },
+  priceLabel: {
+    color: '#000',
+    fontSize: 14,
+  },
+  price: {
+    color: '#000',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  detailsContainer: {
+    padding: 16,
+  },
+  tabContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  activeTab: {
     fontSize: 16,
-    color: '#4B5563',
-    lineHeight: 22,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  inactiveTab: {
+    fontSize: 16,
+    color: '#000',
+  },
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  stat: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  statText: {
+    marginLeft: 8,
+    color: '#000',
+  },
+  description: {
+    color: '#000',
+    marginBottom: 16,
+  },
+  Type: {
+    color: '#000',
+    marginBottom: 16,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  bookButton: {
+    backgroundColor: '#10b981',
+    paddingVertical: 12,
+    borderRadius: 8,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  bookButtonText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  bookButtonIcon: {
+    marginLeft: 8,
   },
   contactContainer: {
-    marginTop: 8,
-  },
-  button: {
-    backgroundColor: '#10B981',
-    paddingVertical: 16,
-    marginHorizontal: 16,
+    backgroundColor: '#F9F9F9',
+    padding: 12,
     borderRadius: 8,
-    alignItems: 'center',
-    marginVertical: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 2,
+    marginTop: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: '#4A90E2',
   },
-  buttonText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#FFFFFF',
+  contactTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#4A90E2',
+    marginBottom: 6,
+  },
+  contactRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  cardText: {
+    fontSize: 14,
+    color: '#333',
+    marginBottom: 4,
+  },
+  label: {
+    fontWeight: 'bold',
   },
 });
 
-export default HospitalDetails;
+export default MountainDetailsScreen;
