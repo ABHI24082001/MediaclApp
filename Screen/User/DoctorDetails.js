@@ -10,10 +10,11 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const MountainDetailsScreen = ({navigation ,route}) => {
-  const { hospital } = route.params;
-  
-  const {name , details , distance , rating , reviews, imageUri , treatments} = hospital;
+const MountainDetailsScreen = ({navigation, route}) => {
+  const {hospital} = route.params;
+
+  const {name, details, distance, rating, reviews, imageUri, treatments} =
+    hospital;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -53,30 +54,28 @@ const MountainDetailsScreen = ({navigation ,route}) => {
           <Text style={styles.description}>{details?.remark}</Text>
 
           <Text style={styles.activeTab}>Contact Number</Text>
-          {details.telephone.landlines &&
-            details.telephone.landlines.map((contact, index) => (
-              <View key={index} style={styles.contactContainer}>
-                <View style={styles.contactRow}>
-                  <Text style={styles.cardText}>
-                    <Text style={styles.label}>Landline: </Text>
-                    {contact}
-                  </Text>
-                </View>
+          <View style={styles.contactContainer}>
+            {details.telephone.landlines && (
+              <View style={styles.contactRow}>
+                <Text style={styles.cardText}>
+                  <Text style={styles.label}>Landline: </Text>
+                  {details.telephone.landlines.join(', ')}
+                </Text>
               </View>
-            ))}
+            )}
+          </View>
 
-          <Text style={styles.activeTab}> All Treatment</Text>
-
-          {treatments.map((treatment, index) => (
-            <View key={index} style={styles.contactContainer}>
+          <Text style={styles.activeTab}>All Treatment</Text>
+          <View style={styles.contactContainer}>
+            {treatments.length > 0 && (
               <View style={styles.contactRow}>
                 <Text style={styles.cardText}>
                   <Text style={styles.label}>Treatment: </Text>
-                  {treatment}
+                  {treatments.join(', ')}
                 </Text>
               </View>
-            </View>
-          ))}
+            )}
+          </View>
 
           <TouchableOpacity
             style={styles.bookButton}

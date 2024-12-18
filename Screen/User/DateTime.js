@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Platform, Alert }
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
+import GradientButton from '../component/GradientButton';
 
 const AppointmentScreen = ({ route,navigation}) => {
   const [date, setDate] = useState(new Date());
@@ -57,14 +57,21 @@ const AppointmentScreen = ({ route,navigation}) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
-        <AntDesign name="arrowleft" size={25} color="#6B7280" onPress={() => navigation.goBack()} />
-        <Text style={styles.headerTitle}>Book Appointment</Text>
-        <View style={{ width: 20 }}></View>
+        <AntDesign
+          name="arrowleft"
+          size={25}
+          color="#6B7280"
+          onPress={() => navigation.goBack()}
+        />
+        <Text style={styles.headerTitle}>Select Date</Text>
+        <View style={{width: 20}}></View>
       </View>
 
       {/* Select Date */}
       <Text style={styles.sectionTitle}>Select Date</Text>
-      <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.datePickerButton}>
+      <TouchableOpacity
+        onPress={() => setShowDatePicker(true)}
+        style={styles.datePickerButton}>
         <Text style={styles.dateText}>{date.toDateString()}</Text>
         <Icon name="calendar-outline" size={20} color="#000" />
       </TouchableOpacity>
@@ -82,23 +89,36 @@ const AppointmentScreen = ({ route,navigation}) => {
       {/* Select Time */}
       <Text style={styles.sectionTitle}>Select Hour</Text>
       <View style={styles.timeGrid}>
-        {availableTimes.map((time) => (
+        {availableTimes.map(time => (
           <TouchableOpacity
             key={time}
-            style={[styles.timeButton, selectedTime === time && styles.selectedTimeButton]}
-            onPress={() => setSelectedTime(time)}
-          >
-            <Text style={[styles.timeText, selectedTime === time && styles.selectedTimeText]}>
+            style={[
+              styles.timeButton,
+              selectedTime === time && styles.selectedTimeButton,
+            ]}
+            onPress={() => setSelectedTime(time)}>
+            <Text
+              style={[
+                styles.timeText,
+                selectedTime === time && styles.selectedTimeText,
+              ]}>
               {time}
             </Text>
           </TouchableOpacity>
         ))}
       </View>
 
+      <GradientButton
+        title="Book Now"
+        onPress={handleConfirm}
+        colors={['#00BFA6', '#007a21']}
+        style={{marginBottom: 20}}
+      />
+
       {/* Confirm Button */}
-      <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
-        <Text style={styles.confirmText}>Confirm</Text>
-      </TouchableOpacity>
+      {/* <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
+        <Text style={styles.confirmText}>Continue</Text>
+      </TouchableOpacity> */}
     </ScrollView>
   );
 };
@@ -113,6 +133,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  
   },
   headerTitle: {
     fontSize: 20,

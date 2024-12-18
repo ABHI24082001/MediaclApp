@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import CountryPicker from '../component/CountryPicker';
 import {Dropdown} from 'react-native-element-dropdown';
+import InputField from '../component/InputField';
 
 const ProfileEdit = ({navigation}) => {
   const [isEditable, setIsEditable] = useState(false);
@@ -37,7 +38,7 @@ const ProfileEdit = ({navigation}) => {
     {label: 'Other', value: 'other'},
   ];
 
-  const [isActivated, setIsActivated] = useState(false); // New state for account activation
+  const [isActivated, setIsActivated] = useState(false);
 
   const handleCountrySelect = country => {
     setSelectedCountry(country);
@@ -80,7 +81,7 @@ const ProfileEdit = ({navigation}) => {
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.content}>
             {/* Input Fields */}
-            <View style={styles.inputContainer}>
+            {/* <View style={styles.inputContainer}>
               <Text style={styles.label}>Enter Your Name</Text>
               <View
                 style={[
@@ -95,11 +96,28 @@ const ProfileEdit = ({navigation}) => {
                   value={profile.name}
                   onChangeText={text => setProfile({...profile, name: text})}
                 />
-                <Icon name="pencil" size={16} color="#4A4A4A" />
+              
               </View>
-            </View>
+            </View> */}
+            <InputField
+              label="Enter your name"
+              iconName="user"
+              placeholder="Enter your name"
+              value={profile.name}
+              onChangeText={text => setProfile({...profile, name: text})}
+              editable={isEditable}
+            />
 
-            <View style={styles.inputContainer}>
+            <InputField
+              label="Enter Your Age"
+              iconName="find"
+              placeholder="Enter your age"
+              value={profile.age}
+              editable={isEditable}
+              onChangeText={text => setProfile({...profile, age: text})}
+            />
+
+            {/* <View style={styles.inputContainer}>
               <Text style={styles.label}>Enter Your Age</Text>
               <View
                 style={[
@@ -115,9 +133,8 @@ const ProfileEdit = ({navigation}) => {
                   value={profile.age}
                   onChangeText={text => setProfile({...profile, age: text})}
                 />
-                <Icon name="pencil" size={16} color="#4A4A4A" />
               </View>
-            </View>
+            </View> */}
 
             {/* Gender Dropdown */}
             <View style={styles.inputContainer}>
@@ -167,7 +184,15 @@ const ProfileEdit = ({navigation}) => {
               onSelect={handleCountrySelect}
             />
 
-            <View style={styles.inputContainer}>
+            <InputField
+              label="Phone Number"
+              iconName="phone"
+              placeholder="Enter your number"
+              value={profile.number}
+              onChangeText={text => setProfile({...profile, number: text})}
+            />
+
+            {/* <View style={styles.inputContainer}>
               <Text style={styles.label}>Enter Your Number</Text>
               <View
                 style={[
@@ -183,28 +208,16 @@ const ProfileEdit = ({navigation}) => {
                   value={profile.number}
                   onChangeText={text => setProfile({...profile, number: text})}
                 />
-                <Icon name="pencil" size={16} color="#4A4A4A" />
               </View>
-            </View>
+            </View> */}
 
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Enter Your Email</Text>
-              <View
-                style={[
-                  styles.inputWrapper,
-                  {backgroundColor: isEditable ? '#FAFAFA' : '#F9F9F9'},
-                ]}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter your Email Address"
-                  placeholderTextColor="#000"
-                  editable={isEditable}
-                  value={profile.email}
-                  onChangeText={text => setProfile({...profile, email: text})}
-                />
-                <Icon name="pencil" size={16} color="#4A4A4A" />
-              </View>
-            </View>
+            <InputField
+              label="Enter your Email"
+              iconName="mail"
+              placeholder="Enter your email"
+              value={profile.email}
+              onChangeText={text => setProfile({...profile, email: text})}
+            />
 
             {/* Account Activation Switch */}
             <View style={styles.inputContainer}>

@@ -7,6 +7,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  StatusBar
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import ImageCarousel from '../component/ImageCarousel';
@@ -38,6 +39,11 @@ const Dashboard = ({navigation}) => {
 
   return (
     <ScrollView style={styles.container}>
+      <StatusBar
+        backgroundColor="#00731f"
+        barStyle="light-content"
+        translucent={false}
+      />
       {/* Header */}
       <View style={styles.header}>
         <View>
@@ -277,7 +283,7 @@ const styles = StyleSheet.create({
     maxWidth: '90%', // Adjust the maximum width to avoid overflow
     alignSelf: 'center',
     overflow: 'hidden', // Ensure text stays within bounds
-  },   
+  },
   medicalCentersContainer: {
     flexDirection: 'row',
     marginBottom: 16,
@@ -291,7 +297,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     shadowColor: '#000',
     shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowRadius: 4,
     elevation: 3,
     overflow: 'hidden',

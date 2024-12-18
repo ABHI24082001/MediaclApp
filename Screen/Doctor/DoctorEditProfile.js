@@ -7,7 +7,7 @@ import {
   Alert,
   Image,
   ScrollView,
-  ToastAndroid
+  ToastAndroid,
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Dropdown} from 'react-native-element-dropdown';
@@ -56,12 +56,10 @@ const DoctorProfile = ({navigation}) => {
     'Dentistry',
   ];
 
-   const experienceYears = Array.from(
-     {length: 30},
-     (_, i) => `${i + 1} Year${i > 0 ? 's' : ''}`,
-   );
-
-   
+  const experienceYears = Array.from(
+    {length: 30},
+    (_, i) => `${i + 1} Year${i > 0 ? 's' : ''}`,
+  );
 
   //  const handleSave = () => {
   //    if (!profile.name || !profile.age || !profile.number) {
@@ -86,11 +84,11 @@ const DoctorProfile = ({navigation}) => {
   //   //  Alert.alert('Success', 'Profile updated successfully!');
   //  };
 
-   const handleEditToggle = () => {
-     setIsEditable(!isEditable);
-    };
+  const handleEditToggle = () => {
+    setIsEditable(!isEditable);
+  };
 
-   const handlePhotoUpload = () => {
+  const handlePhotoUpload = () => {
     launchImageLibrary({mediaType: 'photo'}, response => {
       if (response.didCancel) {
         return;
@@ -117,47 +115,41 @@ const DoctorProfile = ({navigation}) => {
         return;
       }
     });
-   };
+  };
 
-   const handleSave = () => {
-     if (!profile.name || !profile.age || !profile.number) {
-       Alert.alert('Error', 'Please fill all personal details.');
-       return;
-     }
-     if (!profile.specialist) {
-       Alert.alert('Error', 'Please select a specialist.');
-       return;
-     }
-     if (!profile.experience) {
-       Alert.alert('Error', 'Please select years of experience.');
-       return;
-     }
-     if (!profile.photo) {
-       Alert.alert('Error', 'Please upload a profile photo.');
-       return;
-     }
-     if (!profile.degree) {
-       Alert.alert('Error', 'Please enter your degree.');
-       return;
-     }
-     if (!profile.fellowship) {
-       Alert.alert('Error', 'Please enter your fellowship.');
-       return;
-     }
-     if (!profile.about) {
-       Alert.alert('Error', 'Please write about yourself.');
-       return;
-     }
+  const handleSave = () => {
+    if (!profile.name || !profile.age || !profile.number) {
+      Alert.alert('Error', 'Please fill all personal details.');
+      return;
+    }
+    if (!profile.specialist) {
+      Alert.alert('Error', 'Please select a specialist.');
+      return;
+    }
+    if (!profile.experience) {
+      Alert.alert('Error', 'Please select years of experience.');
+      return;
+    }
+    if (!profile.photo) {
+      Alert.alert('Error', 'Please upload a profile photo.');
+      return;
+    }
+    if (!profile.degree) {
+      Alert.alert('Error', 'Please enter your degree.');
+      return;
+    }
+    if (!profile.fellowship) {
+      Alert.alert('Error', 'Please enter your fellowship.');
+      return;
+    }
+    if (!profile.about) {
+      Alert.alert('Error', 'Please write about yourself.');
+      return;
+    }
 
-     setIsEditable(false);
-     ToastAndroid.show('Profile updated successfully!', ToastAndroid.SHORT);
-   };
-
-
- 
-
-
-
+    setIsEditable(false);
+    ToastAndroid.show('Profile updated successfully!', ToastAndroid.SHORT);
+  };
   return (
     <View style={styles.container}>
       {/* Header */}
@@ -175,8 +167,7 @@ const DoctorProfile = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-
-      {/* Content Section */}
+        {/* Content Section */}
         {/* Input Fields */}
         <Text style={styles.modalTitle}>Enter Your Details</Text>
         <InputField

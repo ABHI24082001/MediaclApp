@@ -47,7 +47,7 @@ const AppointmentScreen = ({route, navigation}) => {
       Alert.alert('Allergy Information Required', 'Please enter any known allergies or "None" if applicable.');
       return;
     }
-    setModalVisible(true); // Show modal on confirm button press
+    setModalVisible(true);
   };
 
   return (

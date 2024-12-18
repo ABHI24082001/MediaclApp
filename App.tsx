@@ -72,8 +72,6 @@ function UserTabs() {
             iconName = 'calendar-week';
           } else if (route.name === 'Profile') {
             iconName = 'user-circle';
-          } else if (route.name === 'Chat') {
-            iconName = 'comment-dots';
           }
           return (
             <Icon name={iconName} size={focused ? 32 : 24} color={color} />
@@ -95,10 +93,10 @@ function UserTabs() {
           height: 70,
           borderTopWidth: 0.5,
           borderTopColor: '#ccc',
-          borderTopLeftRadius: 20, // Add border radius to the top left corner
-          borderTopRightRadius: 20, // Add border radius to the top right corner
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
           overflow: 'hidden',
-          marginHorizontal: 0, // Ensure children adhere to border radius
+          marginHorizontal: 0,
         },
         tabBarActiveTintColor: primarycolor,
         tabBarInactiveTintColor: '#92f7c0',
@@ -118,7 +116,7 @@ function UserTabs() {
         component={Profile}
         options={{headerShown: false}}
       />
-      <Tab.Screen name="Chat" component={Book} options={{headerShown: false}} />
+    
     </Tab.Navigator>
   );
 }
@@ -267,6 +265,13 @@ function App() {
           name="ForgetPassword"
           component={ForgetPassword}
           options={{headerShown: false}}
+        />
+        {/* <Tab.Screen name="Chat" component={Book} options={{headerShown: false}} /> */}
+        <Stack.Screen
+          name='Chat'
+          component={Book}
+          options={{headerShown: false}}
+        
         />
         <Stack.Screen
           name="AllHospital"
